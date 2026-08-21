@@ -1,7 +1,10 @@
 import pandas as pd
 import matplotlib.pyplot as plt
+import os
 import sys
-sys.path.append("../")
+
+REPO_ROOT = os.path.dirname(os.path.dirname(os.path.abspath(__file__)))
+sys.path.append(REPO_ROOT)
 from model import Kronos, KronosTokenizer, KronosPredictor
 
 
@@ -46,7 +49,7 @@ model = Kronos.from_pretrained("NeoQuasar/Kronos-small")
 predictor = KronosPredictor(model, tokenizer, max_context=512)
 
 # 3. Prepare Data
-df = pd.read_csv("./data/XSHG_5min_600977.csv")
+df = pd.read_csv(os.path.join(REPO_ROOT, "tests", "data", "regression_input.csv"))
 df['timestamps'] = pd.to_datetime(df['timestamps'])
 
 lookback = 400
